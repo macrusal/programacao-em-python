@@ -21,25 +21,23 @@ def negativo_imagem(imagem):
     for coluna in range(largura):
         for linha in range(altura):
             pixel_original = imagem.getPixel(coluna, linha)
-            novo_pixel = negativo_pixel(pixel_original)
+            novo_pixel = cinzento_pixel(pixel_original)
             imagem_nova.setPixel(coluna, linha, novo_pixel)
     return imagem_nova
 
 
-def negativo_pixel(pixel):
+def cinzento_pixel(pixel):
     """
-    Cria o negativo de um pixel invertendo as cores RGB.
+    Cria o cinzento de um pixel invertendo as cores RGB.
     """
     vermelho = pixel.getRed()
     verde = pixel.getGreen()
     azul = pixel.getBlue()
 
-    # Negativo: 255 - valor_original
-    novo_vermelho = 255 - vermelho
-    novo_verde = 255 - verde
-    novo_azul = 255 - azul
+    # Cinzento
+    int_media = int(0.299*vermelho + 0.587*verde + 0.114*azul) // 3
 
-    return cImage.Pixel(novo_vermelho, novo_verde, novo_azul)
+    return cImage.Pixel(int_media, int_media, int_media)
 
 
 if __name__ == '__main__':

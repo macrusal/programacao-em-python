@@ -18,26 +18,34 @@ def negativo_imagem(imagem):
     altura = imagem.getHeight()
     imagem_nova = cImage.EmptyImage(largura, altura)
 
+    obter_matriz_3d_rgb(imagem_nova)
+
     for coluna in range(largura):
         for linha in range(altura):
             pixel_original = imagem.getPixel(coluna, linha)
-            novo_pixel = negativo_pixel(pixel_original)
+            novo_pixel = sepia_pixel(pixel_original)
             imagem_nova.setPixel(coluna, linha, novo_pixel)
     return imagem_nova
 
 
-def negativo_pixel(pixel):
+def sepia_pixel(pixel):
     """
-    Cria o negativo de um pixel invertendo as cores RGB.
+    Cria o sepia de um pixel invertendo as cores RGB.
     """
     vermelho = pixel.getRed()
     verde = pixel.getGreen()
     azul = pixel.getBlue()
 
-    # Negativo: 255 - valor_original
-    novo_vermelho = 255 - vermelho
-    novo_verde = 255 - verde
-    novo_azul = 255 - azul
+    novo_vermelho = int(vermelho * 0.393 + verde * 0.769 + azul * 0.189)
+    novo_verde = int(vermelho * 0.349 + verde * 0.686 + azul * 0.168)
+    novo_azul = int(vermelho * 0.272 + verde * 0.534 + azul * 0.131)
+
+    if novo_vermelho > 255:
+        novo_vermelho = vermelho
+    if novo_verde > 255:
+        novo_verde = verde
+    if novo_azul > 255:
+        novo_azul = azul
 
     return cImage.Pixel(novo_vermelho, novo_verde, novo_azul)
 
